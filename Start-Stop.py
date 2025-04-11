@@ -50,6 +50,14 @@ def start_ec2_instance(instance_id):
 if __name__ == '__main__':
     start_ec2_instance(Instance_ID)
 
+print("-----------------------------------------------------")
+print("Rebooting Instance")
+instance_id = Instance_ID
+
+ec2.reboot_instances(InstanceIds=[instance_id])
+print(f"Instance {instance_id} has been rebooted.")
+
+
 
 print("-----------------------------------------------------")
 print("Stopping Instance")
