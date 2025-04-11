@@ -16,7 +16,7 @@ for reservation in ec2_response["Reservations"]:
         Private_Ip=instance["PrivateIpAddress"]
         print(f"Instance Id is : {Instance_ID}, Private Ip Addrr is : {Private_Ip}")
 
-
+print("-----------------------------------------------------")
 def start_ec2_instance(instance_id):
 
     try:
@@ -35,9 +35,8 @@ def start_ec2_instance(instance_id):
         instance = response['Reservations'][0]['Instances'][0]
         public_ip = instance.get('PublicIpAddress')
 
-                                                          
-
-
+        # Alternatively, you can use the following line to get the public IP
+        # directly from the response without checking for 'PublicIpAddress'
         # public_ip = response['Reservations'][0]['Instances'][0].get('PublicIpAddress')
 
         if public_ip:
@@ -50,3 +49,15 @@ def start_ec2_instance(instance_id):
 
 if __name__ == '__main__':
     start_ec2_instance(Instance_ID)
+
+
+print("-----------------------------------------------------")
+print("Stopping Instance")
+
+ec2.stop_instances(InstanceIds=[Instance_ID])
+
+# Optionally wait until stopped
+waiter = ec2.get_waiter('instance_stopped')
+waiter.wait(InstanceIds=[Instance_ID])
+
+print(f"Instance {Instance_ID} has been stopped.")
