@@ -54,3 +54,22 @@ print(f"New key pair created: {key_pair_name} (Saved as {pem_file_path})")
 # )
 
 # print(response)
+
+
+print("-------------------------------------------------------------------")
+
+
+def create_key_pairs():
+    print("Creating Key Pairs !")
+    key_pair_name=sys.argv[1]
+    response=ec2.create_key_pairs(KeyName=key_pair_name)
+    
+    privateKey=response["KeyMaterial"]
+    filename=f"{key_pair_name}".pem
+    with open("filename","w"):
+        filename.write(privateKey)
+    os.chmod("filename",0400)
+    print(f"New key pair created: {key_pair_name} (Saved as {pem_file_path})")
+    
+create_key_pairs
+print("-------------------------------------------------------------------")
